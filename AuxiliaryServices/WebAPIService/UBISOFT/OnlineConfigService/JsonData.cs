@@ -274,6 +274,20 @@ private readonly static Dictionary<string, string> GhostReconFutureSoldierMPBeta
             { "uplay_WebServiceBaseUrl",        @"http://wsuplay.ubi.com/UplayServices/UplayFacade/ProfileServicesFacadeRESTXML.svc/REST/"},
         };
 
+        private readonly static Dictionary<string, string> SpartacusLegendsPS3Response = new Dictionary<string, string>()
+        {
+            { "SandboxUrlPS3",                  @"prudp:/address=pdc-lb-rdv-prod09.ubisoft.com;port=25100;serviceid=UP0001-NPUB30746_00"},
+            { "SandboxUrlWS",                   @"pdc-vm-rdv09.ubisoft.com:25100"},
+            { "TrackingSandboxURLPS3",          @"prudp:/address=pdc-lb-rdv-prod09.ubisoft.com;port=25100;serviceid=UP0001-NPUB30746_00"},
+            { "uplay_DownloadServiceUrl",       @"http://wsuplay.ubi.com/UplayServices/UplayFacade/DownloadServicesRESTXML.svc/REST/XML/?url="},
+            { "uplay_DynContentBaseUrl",        @"http://static8.cdn.ubi.com/u/Uplay/"},
+            { "uplay_DynContentSecureBaseUrl",  @"http://static8.cdn.ubi.com/"},
+            { "uplay_LinkappBaseUrl",           @"http://static8.cdn.ubi.com/u/Uplay/Packages/linkapp/1.1/"},
+            { "uplay_MovieBaseUrl",             @"http://static8.cdn.ubi.com/u/Uplay/"},
+            { "uplay_PackageBaseUrl",           @"http://static8.cdn.ubi.com/u/Uplay/Packages/1.5-Share-rc/"},
+            { "uplay_WebServiceBaseUrl",        @"http://wsuplay.ubi.com/UplayServices/UplayFacade/ProfileServicesFacadeRESTXML.svc/REST/"},
+        };
+
         private readonly static Dictionary<string, Tuple<string, string>> SCBLACKLISTPS3Response = new Dictionary<string, Tuple<string, string>>()
         {
             { "punch_DetectUrls",               new Tuple<string, string>(@"lb-prod-mm-detect01.ubisoft.com:11020", "lb-prod-mm-detect02.ubisoft.com:11020")},
@@ -480,6 +494,16 @@ private readonly static Dictionary<string, string> GhostReconFutureSoldierMPBeta
                     break;
                 case "0ae01881bc294a06a95a0e086a6edf0c":
                     foreach (var v in RaymanLegendsPS3Response)
+                    {
+                        list.Add(new OnlineConfigEntry
+                        {
+                            Name = v.Key,
+                            Values = new[] { v.Value }
+                        });
+                    }
+                    break;
+                case "0a790ecc45c44dc0aa4386cb4562f3fa":
+                    foreach (var v in SpartacusLegendsPS3Response)
                     {
                         list.Add(new OnlineConfigEntry
                         {

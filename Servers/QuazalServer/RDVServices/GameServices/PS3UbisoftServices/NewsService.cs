@@ -3,6 +3,8 @@ using QuazalServer.QNetZ;
 using QuazalServer.QNetZ.Attributes;
 using QuazalServer.QNetZ.Interfaces;
 using QuazalServer.RDVServices.RMC;
+using QuazalServer.RDVServices.DDL.Models.UserStorageService;
+using NetworkLibrary.GeoLocalization;
 
 namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
 {
@@ -112,10 +114,57 @@ namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
             UNIMPLEMENTED();
         }
 
-        [RMCMethod(13)]
-        public void GetNewsMessagesByType()
+        public class ResultRange
         {
-            UNIMPLEMENTED();
+            public uint offset { get; set; }
+            public uint size { get; set; }
+        }
+        public class GetNewsMessagesByTypeQuery
+        {
+            public string newsChannelType { get; set; }
+            public ResultRange result_range { get; set; }
+        }
+
+
+        private static uint _newsIdCounter = 1;
+        [RMCMethod(13)]
+        public RMCResult GetNewsMessagesByType(string newschanneltype, ResultRange result_range)
+        {
+
+            var funNews = new List<string>{
+                "Actumcnally",
+                $"Players online: { NetworkPlayers.Players.Count-1 }",
+                "Subscribe to VortexStory on YouTube!",
+                "Support SoapyMan with coffee!",
+            };
+
+            string selectedTitle = newschanneltype switch
+            {
+                "UbiNews" => funNews[0],
+                "UbiNewsMap" => funNews[1],
+                "UbiNewsLoading" => funNews[2],
+                _ => "Unknown news channel"
+            };
+
+            var headers = new List<NewsHeader>
+            {
+                new NewsHeader
+                {
+                    m_ID = _newsIdCounter++,
+                    m_publisherName = "SoapyMan",
+                    m_title = selectedTitle,
+                    m_link = string.Empty,
+                    m_displayTime = DateTime.UtcNow,
+                    m_expirationTime = DateTime.UtcNow.AddDays(10),
+                    m_publicationTime = new DateTime(2000, 10, 12, 13, 0, 0),
+                    m_publisherPID = Context.Client.sPID,
+                    m_recipientID = Context.Client.IDsend,
+                    m_recipientType = 0,
+                }
+            };
+
+            return Result(headers);
         }
     }
-}
+    }
+

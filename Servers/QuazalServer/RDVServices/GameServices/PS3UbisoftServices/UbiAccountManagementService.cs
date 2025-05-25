@@ -199,20 +199,37 @@ namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
         [RMCMethod(12)]
         public RMCResult LookupUbiAccountIDsByPids(IEnumerable<uint> pids)
         {
-            var ubiaccountIDs = new Dictionary<uint, string>();
-
-            using (var db = DBHelper.GetDbContext(Context.Handler.Factory.Item1))
+            if (Context == null || Context.Handler == null)
             {
-                var usersList = db.Users.Where(x => pids.Contains(x.Id)).ToArray();
-
-                foreach (var usr in usersList)
-                {
-                    ubiaccountIDs[usr.Id] = usr.PlayerNickName;
-                }
+                Console.WriteLine("[LookupUbiAccountIDsByPids] Context or Handler is null.");
+                return Result(new Dictionary<uint, string>());
             }
 
+            var factoryTuple = Context.Handler.Factory;
+            if (factoryTuple.Item1 == null)
+            {
+                Console.WriteLine("[LookupUbiAccountIDsByPids] Factory.Item1 is null.");
+                return Result(new Dictionary<uint, string>());
+            }
+
+            var ubiaccountIDs = new Dictionary<uint, string>
+            {
+                { 2852218663, "Hinki" }
+            };
+
+            //using (var db = DBHelper.GetDbContext(factoryTuple.Item1))
+            //{
+            //    var usersList = db.Users.Where(x => pids.Contains(x.Id)).ToArray();
+
+            //    foreach (var usr in usersList)
+            //    {
+            //        ubiaccountIDs[usr.Id] = usr.PlayerNickName ?? "Unknown";
+            //    }
+            //}
             return Result(ubiaccountIDs);
         }
+
+
 
         [RMCMethod(13)]
         public RMCResult LookupUbiAccountIDsByUsernames(IEnumerable<string> Usernames)
@@ -294,11 +311,10 @@ namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
         {
             UNIMPLEMENTED();
         }
-
         [RMCMethod(22)]
-        public void HasAcceptedLatestTOS()
+        public RMCResult HasAcceptedLatestTOS()
         {
-            UNIMPLEMENTED();
+            return Result(new { hasAccepted = true });
         }
 
         [RMCMethod(23)]

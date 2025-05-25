@@ -2,9 +2,53 @@ using QuazalServer.RDVServices.DDL.Models;
 using QuazalServer.QNetZ.Attributes;
 using QuazalServer.QNetZ.Interfaces;
 using QuazalServer.RDVServices.RMC;
+using QuazalServer.QNetZ;
+using QuazalServer.RDVServices.DDL.Models.UserStorageService;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
 {
+    public class RMCPResponseSendTags : RMCPResponse
+    {
+        public override string ToString()
+        {
+            return "[RMCPResponseSendTags]";
+        }
+
+        public override string PayloadToString()
+        {
+            return "";
+        }
+
+        public override byte[] ToBuffer()
+        {
+            // Return empty payload
+            return Array.Empty<byte>();
+        }
+    }
+    public class TrackingInformation
+    {
+        public uint ipn { get; set; }
+        public string userID { get; set; }
+        public string machineID { get; set; }
+        public string visitorID { get; set; }
+        public string utsVersion { get; set; }
+    }
+
+    public class UserInfoResult
+    {
+        public TrackingInformation TrackingInformation { get; set; }
+        public uint TrackingID { get; set; }
+    }
+
+    public class TagResult
+    {
+        public uint TrackingId { get; set; }
+        public string Tag { get; set; }
+        public string Attributes { get; set; }
+        public uint DeltaTime { get; set; }
+    }
+
     [RMCService((ushort)RMCProtocolId.Tracking3)]
     public class TrackingService3 : RMCServiceBase
     {
@@ -23,10 +67,18 @@ namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
         }
 
         [RMCMethod(3)]
-        public RMCResult SendUserInfo(uint delta_time)
+        public RMCResult SendUserInfo(TrackingInformation trackinginformation, uint delta_time)
         {
-            UNIMPLEMENTED();
-            return Error(0);
+            trackinginformation.visitorID = "444";
+            trackinginformation.utsVersion = "1.0.6";
+
+
+            var result = new UserInfoResult
+            {
+                TrackingInformation = trackinginformation,
+                TrackingID = 150
+            };
+            return Result(result);
         }
 
         [RMCMethod(4)]
@@ -36,49 +88,52 @@ namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
             {
                 tags = new List<string>
                 {
-                    "LINKAPP_VIEW",
-                    "UPLAY_START",
-                    "UPLAY_STOP",
-                    "GAME_START",
-                    "GAME_STOP",
-                    "FPSCLIENT_START",
-                    "FPSCLIENT_STOP",
-                    "LEVEL_START",
-                    "LEVEL_STOP",
-                    "OBJECTIVE_START",
-                    "OBJECTIVE_STOP",
-                    "UPLAY_BROWSE",
-                    "GAME_COMPLETE",
-                    "LOBBY_TIME",
-                    "MANUAL_TIME",
-                    "MATCHMAKING_STATS",
-                    "MM_ABORT",
-                    "MM_SUCC",
-                    "OPTIONAL_CONTENT",
-                    "SN_MESSAGE",
-                    "AWARD_UNLOCK",
-                    "PLAYER_DEATH",
-                    "GAME_SAVE",
-                    "INSTALL_START",
-                    "INSTALL_STOP",
-                    "MENU_ENTER",
-                    "MENU_EXIT",
-                    "MENU_OPTIONCHANGE",
-                    "MM_RES",
-                    "PLAYER_KILL",
-                    "PLAYER_SAVED",
-                    "UNINSTALL_START",
-                    "UNINSTALL_STOP",
-                    "VIDEO_START",
-                    "VIDEO_STOP"
+                    //"LINKAPP_VIEW",
+                    //"UPLAY_START",
+                    //"UPLAY_STOP",
+                    //"GAME_START",
+                    //"GAME_STOP",
+                    "FIGHT_STOP",
+                    "UPLAY_MENU",
+                    "UPLAY_ACCOUNT",
+                    "AWARD_UNLOCK"
+                    //"FPSCLIENT_START",
+                    //"FPSCLIENT_STOP",
+                    //"LEVEL_START",
+                    //"LEVEL_STOP",
+                    //"OBJECTIVE_START",
+                    //"OBJECTIVE_STOP",
+                    //"UPLAY_BROWSE",
+                    //"GAME_COMPLETE",
+                    //"LOBBY_TIME",
+                    //"MANUAL_TIME",
+                    //"MATCHMAKING_STATS",
+                    //"MM_ABORT",
+                    //"MM_SUCC",
+                    //"OPTIONAL_CONTENT",
+                    //"SN_MESSAGE",
+                    //"PLAYER_DEATH",
+                    //"GAME_SAVE",
+                    //"INSTALL_START",
+                    //"INSTALL_STOP",
+                    //"MENU_ENTER",
+                    //"MENU_EXIT",
+                    //"MENU_OPTIONCHANGE",
+                    //"MM_RES",
+                    //"PLAYER_KILL",
+                    //"PLAYER_SAVED",
+                    //"UNINSTALL_START",
+                    //"UNINSTALL_STOP",
+                    //"VIDEO_START",
+                    //"VIDEO_STOP"
                 }
             });
         }
 
         [RMCMethod(5)]
-        public void SendTags(List<TrackingTag> trackingtags)
+        public RMCResult SendTags(List<TrackingTag> trackingtags)
         {
-
+            return Error(1);
         }
     }
 }
