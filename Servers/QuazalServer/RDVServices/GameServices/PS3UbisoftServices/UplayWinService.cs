@@ -65,7 +65,7 @@ namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
             {
                 new UplayAction() // useless but we still adding it
                 {
-                    m_code = "SPAACT01",
+                    m_code = "gold_tiny",
                     m_name = "Exclusive Wallpaper",
                     m_description = "Download the DRIVER San Francisco Wallpaper.",
                     m_value = 10,
@@ -80,57 +80,57 @@ namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
                         }
                     }
                 },
-                new UplayAction()
-                {
-                    m_code = "SPAACT02",
-                    m_name = "Tanner's Day Off Challenge",
-                    m_description = "Tear through Russian Hill in Tannerâ\u0080\u0099s iconic Dodge Challenger.",
-                    m_value = 20,
-                    m_gameCode = game_Code,
-                    m_platforms = new List<UplayActionPlatform>()
-                    {
-                        new UplayActionPlatform()
-                        {
-                            m_platformCode = platform_Code,
-                            m_completed = true,
-                            m_specificKey = ""
-                        }
-                    }
-                },
-                new UplayAction()
-                {
-                    m_code = "SPAACT03",
-                    m_name = "Dodge Charger SRT8 Police Car",
-                    m_description = "Unlocks the Dodge Charger SRT8 Police Car for use in Online games.",
-                    m_value = 30,
-                    m_gameCode = game_Code,
-                    m_platforms = new List<UplayActionPlatform>()
-                    {
-                        new UplayActionPlatform()
-                        {
-                            m_platformCode = platform_Code,
-                            m_completed = true,
-                            m_specificKey = ""
-                        }
-                    }
-                },
-                new UplayAction()
-                {
-                    m_code = "SPAACT04",
-                    m_name = "San Francisco Challenges",
-                    m_description = "Four Challenges that showcase different areas of San Francisco.",
-                    m_value = 40,
-                    m_gameCode = game_Code,
-                    m_platforms = new List<UplayActionPlatform>()
-                    {
-                        new UplayActionPlatform()
-                        {
-                            m_platformCode = platform_Code,
-                            m_completed = true,
-                            m_specificKey = ""
-                        }
-                    }
-                },
+                //new UplayAction()
+                //{
+                //    m_code = "SPAACT02",
+                //    m_name = "Tanner's Day Off Challenge",
+                //    m_description = "Tear through Russian Hill in Tannerâ\u0080\u0099s iconic Dodge Challenger.",
+                //    m_value = 20,
+                //    m_gameCode = game_Code,
+                //    m_platforms = new List<UplayActionPlatform>()
+                //    {
+                //        new UplayActionPlatform()
+                //        {
+                //            m_platformCode = platform_Code,
+                //            m_completed = true,
+                //            m_specificKey = ""
+                //        }
+                //    }
+                //},
+                //new UplayAction()
+                //{
+                //    m_code = "SPAACT03",
+                //    m_name = "Dodge Charger SRT8 Police Car",
+                //    m_description = "Unlocks the Dodge Charger SRT8 Police Car for use in Online games.",
+                //    m_value = 30,
+                //    m_gameCode = game_Code,
+                //    m_platforms = new List<UplayActionPlatform>()
+                //    {
+                //        new UplayActionPlatform()
+                //        {
+                //            m_platformCode = platform_Code,
+                //            m_completed = true,
+                //            m_specificKey = ""
+                //        }
+                //    }
+                //},
+                //new UplayAction()
+                //{
+                //    m_code = "SPAACT04",
+                //    m_name = "San Francisco Challenges",
+                //    m_description = "Four Challenges that showcase different areas of San Francisco.",
+                //    m_value = 40,
+                //    m_gameCode = game_Code,
+                //    m_platforms = new List<UplayActionPlatform>()
+                //    {
+                //        new UplayActionPlatform()
+                //        {
+                //            m_platformCode = platform_Code,
+                //            m_completed = true,
+                //            m_specificKey = ""
+                //        }
+                //    }
+                //},
             };
 
             // return 

@@ -2,9 +2,11 @@ using QuazalServer.RDVServices.DDL.Models;
 using QuazalServer.QNetZ.Attributes;
 using QuazalServer.QNetZ.Interfaces;
 using QuazalServer.RDVServices.RMC;
+using QuazalServer.QNetZ.Connection;
 using QuazalServer.QNetZ;
 using QuazalServer.RDVServices.DDL.Models.UserStorageService;
 using Org.BouncyCastle.Asn1.Cms;
+using QuazalServer.QNetZ.DDL;
 
 namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
 {
@@ -35,6 +37,10 @@ namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
         public string utsVersion { get; set; }
     }
 
+    public class SendTagsResponse
+    {
+        public uint retval { get; set; }
+    }
     public class UserInfoResult
     {
         public TrackingInformation TrackingInformation { get; set; }
@@ -47,6 +53,11 @@ namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
         public string Tag { get; set; }
         public string Attributes { get; set; }
         public uint DeltaTime { get; set; }
+    }
+
+    public class ConfigurationResponse
+    {
+        public List<string> Tags { get; set; }
     }
 
     [RMCService((ushort)RMCProtocolId.Tracking3)]
@@ -84,56 +95,24 @@ namespace QuazalServer.RDVServices.GameServices.PS3UbisoftServices
         [RMCMethod(4)]
         public RMCResult GetConfiguration()
         {
-            return Result(new
+            var response = new ConfigurationResponse
             {
-                tags = new List<string>
-                {
-                    //"LINKAPP_VIEW",
-                    //"UPLAY_START",
-                    //"UPLAY_STOP",
-                    //"GAME_START",
-                    //"GAME_STOP",
-                    "FIGHT_STOP",
-                    "UPLAY_MENU",
-                    "UPLAY_ACCOUNT",
-                    "AWARD_UNLOCK"
-                    //"FPSCLIENT_START",
-                    //"FPSCLIENT_STOP",
-                    //"LEVEL_START",
-                    //"LEVEL_STOP",
-                    //"OBJECTIVE_START",
-                    //"OBJECTIVE_STOP",
-                    //"UPLAY_BROWSE",
-                    //"GAME_COMPLETE",
-                    //"LOBBY_TIME",
-                    //"MANUAL_TIME",
-                    //"MATCHMAKING_STATS",
-                    //"MM_ABORT",
-                    //"MM_SUCC",
-                    //"OPTIONAL_CONTENT",
-                    //"SN_MESSAGE",
-                    //"PLAYER_DEATH",
-                    //"GAME_SAVE",
-                    //"INSTALL_START",
-                    //"INSTALL_STOP",
-                    //"MENU_ENTER",
-                    //"MENU_EXIT",
-                    //"MENU_OPTIONCHANGE",
-                    //"MM_RES",
-                    //"PLAYER_KILL",
-                    //"PLAYER_SAVED",
-                    //"UNINSTALL_START",
-                    //"UNINSTALL_STOP",
-                    //"VIDEO_START",
-                    //"VIDEO_STOP"
-                }
-            });
+                Tags = new List<string>
+        {
+            "FIGHT_STOP",
+            "UPLAY_MENU",
+            "UPLAY_ACCOUNT",
+            "AWARD_UNLOCK"
+        }
+            };
+
+            return Result(response);
         }
 
         [RMCMethod(5)]
         public RMCResult SendTags(List<TrackingTag> trackingtags)
         {
-            return Error(1);
+            return Error(65537);
         }
     }
 }
